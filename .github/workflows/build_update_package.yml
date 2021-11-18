@@ -1,0 +1,60 @@
+name: Rust
+
+env:
+  GENESIS_FILES_DIR: ./resources/production
+  NODE_BUILD_TARGET: ./target/release/casper-node
+  #PROTOCOL_VERSION: dynamically generated below
+  #UPGRADE_DIR: dynamically generated below
+  #BIN_DIR: dynamically generated below
+  NODE_BUILD_DIR: ./node
+on:
+  pull_request:
+    tags: 
+      - 'release-*'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set PROTOCOL_VERSION
+      run: |
+        echo "PROTOCOL_VERSION=$(cat \"$GENESIS_FILES_DIR/chainspec.toml\" | python3 -c \"import sys, toml; print(toml.load(sys.stdin)['protocol']['version'].replace('.','_'))\")" >> $GITHUB_ENV
+
+    - name: Set UPGRADE_DIR
+      run: |
+        echo "UPGRADE_DIR=./target/upgrade_build/$PROTOCOL_VERSION >> $GITHUB_ENV"
+
+    - name: Set BIN_DIR
+      run: |
+        echo "BIN_DIR=$UPGRADE_DIR/bin >> $GITHUB_ENV"
+
+    - name: Set CONFIG_DIR
+      run: |
+        echo "CONFIG_DIR=$UPGRADE_DIR/config >> $GITHUB_ENV"
+
+    - name: Set readme
+      run: |
+        echo "readme=$BIN_DIR/README.md >> $GITHUB_ENV"
+
+    - name: Create BIN_DIR
+      run: |
+        mkdir -p "$BIN_DIR"
+
+    #I'm not exactly liking this approach, 
+    - name: Generate readme file content
+      run: |
+    
+    - name: Building casper-node
+      run: cargo build --release
+      working-directory: $NODE_BUILD_DIR
+      
+    - name: Generating bin README.md
+      run: cargo test --verbose
+     
+      github 
