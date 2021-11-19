@@ -8,9 +8,9 @@ env:
   #BIN_DIR: dynamically generated below
   NODE_BUILD_DIR: ./node
 on:
-  pull_request:
+  push:
     tags: 
-      - 'release-*'
+      - '*'
 
 env:
   CARGO_TERM_COLOR: always
