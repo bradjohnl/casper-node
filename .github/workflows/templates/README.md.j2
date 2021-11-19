@@ -4,4 +4,4 @@
   echo " cd node"
   echo " cargo build --release"
   echo ""
-  echo "git commit hash: $(git rev-parse HEAD)"
+  echo "git commit hash: ${{ env['GITHUB_SHA'] }}"
