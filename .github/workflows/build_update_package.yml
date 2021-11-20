@@ -47,6 +47,11 @@ jobs:
       run: |
         mkdir -p "{{ env.BIN_DIR }}"
 
+    - uses: actions-rs/cargo@v1
+      with:
+        command: build
+        args: --release --manifest-path=node/Cargo.toml
+
     - name: Generate README
       uses: cuchi/jinja2-action@v1.2.0
       with:
