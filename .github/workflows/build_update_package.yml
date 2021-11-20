@@ -25,60 +25,60 @@ jobs:
     
     - name: Set PROTOCOL_VERSION
       run: |
-        echo "PROTOCOL_VERSION=$(cat $GENESIS_FILES_DIR/chainspec.toml | python3 -c "import sys, toml; print(toml.load(sys.stdin)['protocol']['version'].replace('.','_'))")" >> $GITHUB_ENV
+        echo "PROTOCOL_VERSION=$(cat {{ env.GENESIS_FILES_DIR }}/chainspec.toml | python3 -c "import sys, toml; print(toml.load(sys.stdin)['protocol']['version'].replace('.','_'))")" >> $GITHUB_ENV
 
     - name: Set UPGRADE_DIR
       run: |
-        echo "UPGRADE_DIR=./target/upgrade_build/$PROTOCOL_VERSION >> $GITHUB_ENV"
+        echo "UPGRADE_DIR=./target/upgrade_build/{{ env.PROTOCOL_VERSION }} >> $GITHUB_ENV"
 
     - name: Set BIN_DIR
       run: |
-        echo "BIN_DIR=$UPGRADE_DIR/bin >> $GITHUB_ENV"
+        echo "BIN_DIR={{ env.UPGRADE_DIR }}/bin >> $GITHUB_ENV"
 
     - name: Set CONFIG_DIR
       run: |
-        echo "CONFIG_DIR=$UPGRADE_DIR/config >> $GITHUB_ENV"
+        echo "CONFIG_DIR={{ env.UPGRADE_DIR }}/config >> $GITHUB_ENV"
 
     - name: Set readme
       run: |
-        echo "readme=$BIN_DIR/README.md >> $GITHUB_ENV"
+        echo "readme={{ env.BIN_DIR }}/README.md >> $GITHUB_ENV"
 
     - name: Create BIN_DIR
       run: |
-        mkdir -p "$BIN_DIR"
+        mkdir -p "{{ env.BIN_DIR }}"
 
     - name: Generate README
       uses: cuchi/jinja2-action@v1.2.0
       with:
         template: ./.github/workflows/templates/README.md.j2
-        output_file: $BIN_DIR/README.md
+        output_file: "{{ env.BIN_DIR }}/README.md"
     
     - name: Preparing for packaging bin.tar.gz
       run: |
-        cp "$NODE_BUILD_TARGET" "$BIN_DIR"
+        cp "{{ env.NODE_BUILD_TARGET }}" "{{ env.BIN_DIR }}"
 
     - name: Packaging bin.tar.gz
       uses: thedoctor0/zip-release@master
       with:
         type: 'tar'
         filename: '../bin.tar.gz'
-        directory: $BIN_DIR
+        directory: "{{ env.BIN_DIR }}"
 
     - name: "Preparing for packaging config.tar.gz"
       run: |
-        mkdir -p "$CONFIG_DIR"
-        cp "$GENESIS_FILES_DIR/chainspec.toml" "$CONFIG_DIR"
-        cp "$GENESIS_FILES_DIR/config-example.toml" "$CONFIG_DIR"
-        cp "$GENESIS_FILES_DIR/accounts.toml" "$CONFIG_DIR"
+        mkdir -p "{{ env.CONFIG_DIR }}"
+        cp "{{ env.GENESIS_FILES_DIR }}/chainspec.toml" "{{ env.CONFIG_DIR }}"
+        cp "{{ env.GENESIS_FILES_DIR }}/config-example.toml" "{{ env.CONFIG_DIR }}"
+        cp "{{ env.GENESIS_FILES_DIR }}/accounts.toml" "{{ env.CONFIG_DIR }}"
 
     - name: Packaging config.tar.gz
       uses: thedoctor0/zip-release@master
       with:
         type: 'tar'
         filename: '../config.tar.gz'
-        directory: $CONFIG_DIR
+        directory: "{{ env.CONFIG_DIR }}"
 
     - name: Cleanup
       run: |
-        rm -rf $CONFIG_DIR
-        rm -rf $BIN_DIR
+        rm -rf {{ env.CONFIG_DIR }}
+        rm -rf {{ env.$BIN_DIR }}
