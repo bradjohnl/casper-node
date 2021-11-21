@@ -47,10 +47,9 @@ jobs:
       run: |
         mkdir -p "{{ env.BIN_DIR }}"
 
-    - uses: actions-rs/cargo@v1
-      with:
-        command: build
-        args: --manifest-path={{ env.NODE_BUILD_DIR }}/Cargo.toml --release 
+    - name: Building casper-node
+      run: | 
+        cd {{ env.NODE_BUILD_DIR }} && cargo build --release
 
     - name: Generate README
       uses: cuchi/jinja2-action@v1.2.0
