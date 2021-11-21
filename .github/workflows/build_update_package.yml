@@ -50,7 +50,7 @@ jobs:
     - uses: actions-rs/cargo@v1
       with:
         command: build
-        args: --release --manifest-path=node/Cargo.toml
+        args: --release --manifest-path={{ env.NODE_BUILD_DIR }}/Cargo.toml
 
     - name: Generate README
       uses: cuchi/jinja2-action@v1.2.0
@@ -82,6 +82,16 @@ jobs:
         type: 'tar'
         filename: '../config.tar.gz'
         directory: "{{ env.CONFIG_DIR }}"
+
+
+    # - name: Publish to S3
+    # uses: actions/upload-s3@v1
+    # with:
+    # bucket: my-bucket
+    # path: myapp/
+    # name: myapp
+    # overwrite: true
+    # region: us-east-1
 
     - name: Cleanup
       run: |
