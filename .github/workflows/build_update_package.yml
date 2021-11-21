@@ -49,7 +49,7 @@ jobs:
 
     - name: Building casper-node
       run: | 
-        cargo build --release
+        cargo build --target $HOST --release
       working-directory: "$NODE_BUILD_DIR"
 
     - name: Generate README
