@@ -47,9 +47,13 @@ jobs:
       run: |
         mkdir -p "{{ env.BIN_DIR }}"
 
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+
     - name: Building casper-node
       run: | 
-        cargo build --target $HOST --release
+        cargo build --release
       working-directory: "$NODE_BUILD_DIR"
 
     - name: Generate README
