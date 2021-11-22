@@ -97,17 +97,24 @@ jobs:
         filename: '../config.tar.gz'
         directory: "${{ env.CONFIG_DIR }}"
 
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ env.UPGRADE_DIR }}/bin.tar.gz
+        tag: ${{ github.ref }}
+        asset_name: casper-node-bin
+        overwrite: true
+        body: "Casper Node binaries"
 
-    # - name: Publish to S3
-    # uses: actions/upload-s3@v1
-    # with:
-    # bucket: my-bucket
-    # path: myapp/
-    # name: myapp
-    # overwrite: true
-    # region: us-east-1
+    - name: Upload config to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ env.UPGRADE_DIR }}/config.tar.gz
+        tag: ${{ github.ref }}
+        asset_name: casper-node-config
+        overwrite: true
+        body: "Casper Node config"
 
-    - name: Cleanup
-      run: |
-        rm -rf $CONFIG_DIR
-        rm -rf $BIN_DIR
+    
