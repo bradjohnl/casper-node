@@ -80,8 +80,8 @@ jobs:
       uses: thedoctor0/zip-release@master
       with:
         type: 'tar'
-        filename: '../bin.tar.gz'
-        directory: "${{ env.BIN_DIR }}"
+        filename: 'bin.tar.gz'
+        path: "${{ env.BIN_DIR }}"
 
     - name: "Preparing for packaging config.tar.gz"
       run: |
@@ -94,8 +94,8 @@ jobs:
       uses: thedoctor0/zip-release@master
       with:
         type: 'tar'
-        filename: '../config.tar.gz'
-        directory: "${{ env.CONFIG_DIR }}"
+        filename: 'config.tar.gz'
+        path: "${{ env.CONFIG_DIR }}"
 
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
