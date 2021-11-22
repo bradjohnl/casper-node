@@ -86,7 +86,7 @@ jobs:
     - name: "Preparing for packaging config.tar.gz"
       run: |
         mkdir -p "$CONFIG_DIR"
-        cp "$ENESIS_FILES_DIR/chainspec.toml" "$CONFIG_DIR"
+        cp "$GENESIS_FILES_DIR/chainspec.toml" "$CONFIG_DIR"
         cp "$GENESIS_FILES_DIR/config-example.toml" "$CONFIG_DIR"
         cp "$GENESIS_FILES_DIR/accounts.toml" "$CONFIG_DIR"
 
