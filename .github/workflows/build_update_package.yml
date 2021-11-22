@@ -29,19 +29,19 @@ jobs:
 
     - name: Set UPGRADE_DIR
       run: |
-        echo "UPGRADE_DIR=./target/upgrade_build/$PROTOCOL_VERSION >> $GITHUB_ENV"
+        echo "UPGRADE_DIR=./target/upgrade_build/$PROTOCOL_VERSION" >> $GITHUB_ENV
 
     - name: Set BIN_DIR
       run: |
-        echo "BIN_DIR=$UPGRADE_DIR/bin >> $GITHUB_ENV"
+        echo "BIN_DIR=$UPGRADE_DIR/bin" >> $GITHUB_ENV
 
     - name: Set CONFIG_DIR
       run: |
-        echo "CONFIG_DIR=$UPGRADE_DIR/config >> $GITHUB_ENV"
+        echo "CONFIG_DIR=$UPGRADE_DIR/config" >> $GITHUB_ENV
 
     - name: Set readme
       run: |
-        echo "readme=$BIN_DIR/README.md >> $GITHUB_ENV"
+        echo "readme=$BIN_DIR/README.md" >> $GITHUB_ENV
 
     - name: Create BIN_DIR
       run: |
