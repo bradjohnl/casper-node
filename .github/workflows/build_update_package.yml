@@ -55,9 +55,7 @@ jobs:
       uses: actions-rs/cargo@v1
       with:
         command: build
-        args: --release
-      working-directory: $NODE_BUILD_DIR
-
+        args: --release --manifest-path $NODE_BUILD_DIR/Cargo.toml
 
     - name: Generate README
       uses: cuchi/jinja2-action@v1.2.0
