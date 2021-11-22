@@ -6,7 +6,7 @@ env:
   #PROTOCOL_VERSION: dynamically generated below
   #UPGRADE_DIR: dynamically generated below
   #BIN_DIR: dynamically generated below
-  NODE_BUILD_DIR: ./node
+  #NODE_BUILD_DIR: does not get resolved for some reason. Will investigate at a later stage. For now, I am hardcoding the ./node dir
 on:
   push:
     tags: 
@@ -51,11 +51,20 @@ jobs:
       with:
         toolchain: stable
 
+    - name: Load cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          target
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
     - name: Run cargo build
       uses: actions-rs/cargo@v1
       with:
         command: build
-        args: --release --manifest-path {{ env.$NODE_BUILD_DIR }}/Cargo.toml
+        args: --release --manifest-path ./node/Cargo.toml
 
     - name: Generate README
       uses: cuchi/jinja2-action@v1.2.0
