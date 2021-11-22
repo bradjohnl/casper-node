@@ -51,10 +51,12 @@ jobs:
       with:
         toolchain: stable
 
-    - name: Building casper-node
-      run: | 
-        cargo build --release
-      working-directory: "$NODE_BUILD_DIR"
+    - name: Run cargo build
+      uses: actions-rs/cargo@v1
+      with:
+        command: build --release
+      working-directory: $NODE_BUILD_DIR
+
 
     - name: Generate README
       uses: cuchi/jinja2-action@v1.2.0
