@@ -6,7 +6,7 @@ env:
   #PROTOCOL_VERSION: dynamically generated below
   #UPGRADE_DIR: dynamically generated below
   #BIN_DIR: dynamically generated below
-  #NODE_BUILD_DIR: does not get resolved for some reason. Will investigate at a later stage. For now, I am hardcoding the ./node dir
+  NODE_BUILD_DIR: ./node
 on:
   push:
     tags: 
@@ -64,7 +64,7 @@ jobs:
       uses: actions-rs/cargo@v1
       with:
         command: build
-        args: --release --manifest-path ./node/Cargo.toml
+        args: --release --manifest-path ${{ env.NODE_BUILD_DIR }}/Cargo.toml
 
     - name: Generate README
       uses: cuchi/jinja2-action@v1.2.0
@@ -81,7 +81,7 @@ jobs:
       with:
         type: 'tar'
         filename: '../bin.tar.gz'
-        directory: "{{ env.BIN_DIR }}"
+        directory: "${{ env.BIN_DIR }}"
 
     - name: "Preparing for packaging config.tar.gz"
       run: |
