@@ -103,9 +103,8 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ${{ env.UPGRADE_DIR }}/bin.tar.gz
         tag: ${{ github.ref }}
-        asset_name: casper-node-bin
+        asset_name: casper-node-bin.tgz
         overwrite: true
-        body: "Casper Node binaries"
 
     - name: Upload config to release
       uses: svenstaro/upload-release-action@v2
@@ -113,8 +112,7 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ${{ env.UPGRADE_DIR }}/config.tar.gz
         tag: ${{ github.ref }}
-        asset_name: casper-node-config
+        asset_name: casper-node-config.tgz
         overwrite: true
-        body: "Casper Node config"
 
     
