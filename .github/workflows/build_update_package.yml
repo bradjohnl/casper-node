@@ -54,7 +54,8 @@ jobs:
     - name: Run cargo build
       uses: actions-rs/cargo@v1
       with:
-        command: build --release
+        command: build
+        args: --release
       working-directory: $NODE_BUILD_DIR
 
 
