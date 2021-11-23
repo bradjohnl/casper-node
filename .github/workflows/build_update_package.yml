@@ -101,7 +101,7 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ${{ env.UPGRADE_DIR }}/bin.tar.gz
+        file: bin.tar.gz
         tag: ${{ github.ref }}
         asset_name: casper-node-bin.tgz
         overwrite: true
@@ -110,7 +110,7 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ${{ env.UPGRADE_DIR }}/config.tar.gz
+        file: config.tar.gz
         tag: ${{ github.ref }}
         asset_name: casper-node-config.tgz
         overwrite: true
