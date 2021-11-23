@@ -51,8 +51,9 @@ jobs:
       with:
         toolchain: stable
         profile: minimal
-
-    - uses: Swatinem/rust-cache@v1
+    
+    - name: Loading Rust cache
+      uses: Swatinem/rust-cache@v1
 
     - name: Run cargo build
       uses: actions-rs/cargo@v1
@@ -91,22 +92,10 @@ jobs:
         filename: 'config.tar.gz'
         path: "${{ env.CONFIG_DIR }}"
 
-    - name: Upload binaries to release
-      uses: svenstaro/upload-release-action@v2
+    - name: Creating release
+      uses: ncipollo/release-action@v1
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: bin.tar.gz
-        tag: ${{ github.ref }}
-        asset_name: casper-node-bin.tgz
-        overwrite: true
-
-    - name: Upload config to release
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: config.tar.gz
-        tag: ${{ github.ref }}
-        asset_name: casper-node-config.tgz
-        overwrite: true
+        artifacts: "config.tar.gz,bin.tar.gz"
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     
