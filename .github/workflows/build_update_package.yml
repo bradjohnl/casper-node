@@ -1,12 +1,12 @@
 name: Rust
 
 env:
-  GENESIS_FILES_DIR: ./resources/production
-  NODE_BUILD_TARGET: ./target/release/casper-node
+  GENESIS_FILES_DIR: resources/production
+  NODE_BUILD_TARGET: target/release/casper-node
   #PROTOCOL_VERSION: dynamically generated below
   #UPGRADE_DIR: dynamically generated below
   #BIN_DIR: dynamically generated below
-  NODE_BUILD_DIR: ./node
+  NODE_BUILD_DIR: node
 on:
   push:
     tags: 
@@ -29,7 +29,7 @@ jobs:
 
     - name: Set UPGRADE_DIR
       run: |
-        echo "UPGRADE_DIR=./target/upgrade_build/$PROTOCOL_VERSION" >> $GITHUB_ENV
+        echo "UPGRADE_DIR=target/upgrade_build/$PROTOCOL_VERSION" >> $GITHUB_ENV
 
     - name: Set BIN_DIR
       run: |
@@ -69,7 +69,7 @@ jobs:
     - name: Generate README
       uses: cuchi/jinja2-action@v1.2.0
       with:
-        template: ./.github/workflows/templates/README.md.j2
+        template: .github/workflows/templates/README.md.j2
         output_file: "${{ env.BIN_DIR }}/README.md"
     
     - name: Preparing for packaging bin.tar.gz
