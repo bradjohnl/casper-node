@@ -93,6 +93,7 @@ start_run_teardown "itst11_private_chain.sh"
 
 # FIXME: Failing for now. Probably because of the completely different accounts.toml. Will investigate at another time.
 #start_run_teardown "itst14_private_chain.sh"
+
 start_run_teardown "itst15_private_chain.sh"
 
 start_run_teardown "bond_its.sh"
